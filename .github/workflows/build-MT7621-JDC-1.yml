@@ -26,6 +26,13 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
+        echo 'Run lscpu:'
+        lscpu
+        echo 'Run df -h:'
+        df -h
+        echo 'Run free -h:'
+        free -h
+        
         sudo apt-get update
         sudo apt-get -y install automake autopoint unzip libtool-bin curl cmake gperf gawk flex bison nano xxd \
         fakeroot kmod cpio git python-docutils python3-docutils gettext \
