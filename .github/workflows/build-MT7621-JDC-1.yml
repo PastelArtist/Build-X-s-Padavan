@@ -55,7 +55,7 @@ jobs:
         cat /opt/rt-n56u/trunk/.config
         cd /opt/rt-n56u/trunk
         sudo ./clear_tree_simple
-        sudo ./build_firmware_modify $m 0
+        sudo ./build_firmware_modify $TNAME 0
         sudo mv -f images/*.trx /opt/images
         sudo cp -vpf .config /opt/images
         done
