@@ -52,6 +52,9 @@ jobs:
         cat /opt/rt-n56u/trunk/user/shared/defaults.h
         cd /opt/rt-n56u/toolchain-mipsel
         sh dl_toolchain.sh
+
+        echo 'Run ls -la /opt/rt-n56u/toolchain-mipsel:'
+        ls -la /opt/rt-n56u/toolchain-mipsel
         mkdir -p /opt/images/
     - name: Build Firmware
       env:
