@@ -1,4 +1,4 @@
-name: Build MT7621-JDC-1
+name: Build MT7621 JDC-1
 
 on: 
   repository_dispatch:
