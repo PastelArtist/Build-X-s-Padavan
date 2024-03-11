@@ -38,9 +38,9 @@ jobs:
         pwd
         mkdir -p /opt/rt-n56u
         git clone --depth=1 https://github.com/immortalwrt/padavan.git /opt/rt-n56u
-        sed -i 's/192.168.2/192.168.68/g' trunk/user/shared/defaults.h
-        sed -i 's/ntp1.aliyun.com/time.pool.aliyun.com/g' trunk/user/shared/defaults.h
-        sed -i 's/2001:470:0:50::2/time.asia.apple.com/g' trunk/user/shared/defaults.h
+        sed -i 's/192.168.2/192.168.68/g' /opt/rt-n56u/trunk/user/shared/defaults.h
+        sed -i 's/ntp1.aliyun.com/time.pool.aliyun.com/g' /opt/rt-n56u/trunk/user/shared/defaults.h
+        sed -i 's/2001:470:0:50::2/time.asia.apple.com/g' /opt/rt-n56u/trunk/user/shared/defaults.h
         echo 'cat /opt/rt-n56u/trunk/user/shared/defaults.h:'
         cat /opt/rt-n56u/trunk/user/shared/defaults.h
         cd /opt/rt-n56u/toolchain-mipsel
