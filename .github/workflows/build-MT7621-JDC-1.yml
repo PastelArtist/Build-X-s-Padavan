@@ -1,0 +1,66 @@
+name: Build MT7621-JDC-1
+
+on: 
+  repository_dispatch:
+  workflow_dispatch:
+  #  release:
+    #  types: [published]
+#  push:
+#    tags:
+#    - 'v*'
+  #  branches: 
+  #    - master
+#  schedule:
+ #   - cron: 0 17 * * 4
+#  watch:
+   # types: [started]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@main
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install automake autopoint unzip libtool-bin curl cmake gperf gawk flex bison nano xxd \
+        fakeroot kmod cpio git python-docutils python3-docutils gettext \
+        texinfo build-essential help2man pkg-config \
+        zlib1g-dev gnutls-dev libgmp3-dev \
+        libmpc-dev libmpfr-dev libncurses5-dev libltdl-dev wget libc-dev-bin
+    - name: Clone source code
+      run: |
+        echo 'current dir:'
+        pwd
+        mkdir -p /opt/rt-n56u
+        git clone --depth=1 https://github.com/immortalwrt/padavan.git /opt/rt-n56u
+        sed -i 's/192.168.2/192.168.68/g' trunk/user/shared/defaults.h
+        sed -i 's/ntp1.aliyun.com/time.pool.aliyun.com/g' trunk/user/shared/defaults.h
+        sed -i 's/2001:470:0:50::2/time.asia.apple.com/g' trunk/user/shared/defaults.h
+        echo 'cat /opt/rt-n56u/trunk/user/shared/defaults.h:'
+        cat /opt/rt-n56u/trunk/user/shared/defaults.h
+        cd /opt/rt-n56u/toolchain-mipsel
+        sh dl_toolchain.sh
+        mkdir -p /opt/images/
+    - name: Build Firmware
+      env:
+        TNAME: "JDC-1"
+      run: |
+        echo "FILE_DATE=-$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
+        cp -vpf $TNAME.config /opt/rt-n56u/trunk/.config
+        cat /opt/rt-n56u/trunk/.config
+        cd /opt/rt-n56u/trunk
+        sudo ./clear_tree_simple
+        sudo ./build_firmware_modify $m 0
+        sudo mv -f images/*.trx /opt/images
+        sudo cp -vpf .config /opt/images
+        done
+    - name : Upload artifact
+      uses: actions/upload-artifact@main
+      with:
+        name: Padavan-MT7621-JDC-1-I${{ env.FILE_DATE }}
+        path: /opt/images
