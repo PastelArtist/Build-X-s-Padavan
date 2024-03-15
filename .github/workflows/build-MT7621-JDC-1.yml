@@ -44,7 +44,7 @@ jobs:
         echo 'current dir:'
         pwd
         mkdir -p /opt/rt-n56u
-        git clone --depth=1 https://github.com/immortalwrt/padavan.git /opt/rt-n56u
+        git clone --depth=1 https://github.com/PastelArtist/Padavan-KVR.git /opt/rt-n56u
         sed -i 's/192.168.2/192.168.68/g' /opt/rt-n56u/trunk/user/shared/defaults.h
         sed -i 's/ntp1.aliyun.com/time.pool.aliyun.com/g' /opt/rt-n56u/trunk/user/shared/defaults.h
         sed -i 's/2001:470:0:50::2/time.asia.apple.com/g' /opt/rt-n56u/trunk/user/shared/defaults.h
